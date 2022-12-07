@@ -57,22 +57,39 @@ function retriveFromStorage() {
 
 function generateTasks() {
     // get ordered list element
-    OlLi = $("ol");
+    OlEl = $("ol");
     // i have the list now. add list items in loop PREPEND
     var todoData = retriveFromStorage();
-    var uniqueID_I = todoData.length - 1;
+    updateCount(todoData);
+    // var uniqueID_I = todoData.length - 1;
     console.log(todoData);
     // clear old list
-    OlLi.empty();
+    OlEl.empty();
     for (task of todoData) {
-        OlLi.prepend(`<li>${task}</li>`).attr(`id="${uniqueID_I}"`);
+        OlEl.prepend(`<li>${task}</li>`);
+        // console.log(uniqueID_I);
         // OlLi.prepend(`<li id="${uniqueID_I}">
         // ${task}
         // <button id="${uniqueID_I}">Clear<button>
         // </li>`);
-        uniqueID_I--;
-        console.log("counter");
+        // uniqueID_I--;
+        // console.log("counter");
+
     }
+// sets id to each list item
+    var liEl = $("li");
+    console.log(liEl)
+    liEl.each(function(index, element) {
+        $(element).attr("id", index);
+        $(element).append("<button>Clear</button>");
+        var LiBtnEl = $(`#${index} button`);
+        LiBtnEl.attr("id", index);
+        // console.log(element)
+        // index++
+        // $(`li button:nth-child(${index})`).attr("id", index);
+        console.log("line 81");
+    })
+
 }
 
 generateTasks();
@@ -83,4 +100,30 @@ generateTasks();
 
 // update to do counter function INCLUDE WITHIN ABOVE CALLBACK MAYBE
 
-var clear
+function updateCount(todoData) {
+    console.log(todoData)
+    var todoDataLength = todoData.length
+    var counterEl = $("#count");
+    counterEl.text(todoDataLength);
+    console.log("test");
+}
+
+$("button").click(function() {
+    console.log($(this));
+    var currentElID = $(this).attr("id");
+    console.log(currentElID);
+    clearFromStorage(currentElID);
+    retriveFromStorage();
+    generateTasks();
+    updateCount();
+    console.log("???");
+
+})
+
+function clearFromStorage(index) {
+    var todoData = retriveFromStorage();
+    todoData.splice(index, 1);
+    todoDataString = JSON.stringify(todoData);
+    localStorage.setItem("todoData", todoDataString);
+
+}
