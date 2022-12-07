@@ -67,29 +67,18 @@ function generateTasks() {
     OlEl.empty();
     for (task of todoData) {
         OlEl.prepend(`<li>${task}</li>`);
-        // console.log(uniqueID_I);
-        // OlLi.prepend(`<li id="${uniqueID_I}">
-        // ${task}
-        // <button id="${uniqueID_I}">Clear<button>
-        // </li>`);
-        // uniqueID_I--;
-        // console.log("counter");
-
     }
-// sets id to each list item
+    // sets id to each list item
     var liEl = $("li");
     console.log(liEl)
-    liEl.each(function(index, element) {
+    liEl.each(function (index, element) {
         $(element).attr("id", index);
         $(element).append("<button>Clear</button>");
         var LiBtnEl = $(`#${index} button`);
         LiBtnEl.attr("id", index);
-        // console.log(element)
-        // index++
-        // $(`li button:nth-child(${index})`).attr("id", index);
         console.log("line 81");
     })
-
+    updateCount(todoData);
 }
 
 generateTasks();
@@ -108,16 +97,11 @@ function updateCount(todoData) {
     console.log("test");
 }
 
-$("button").click(function() {
-    console.log($(this));
+$("button").click(function () {
     var currentElID = $(this).attr("id");
-    console.log(currentElID);
     clearFromStorage(currentElID);
-    retriveFromStorage();
     generateTasks();
-    updateCount();
-    console.log("???");
-
+    console.log($("button"));
 })
 
 function clearFromStorage(index) {
