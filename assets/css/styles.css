@@ -1,0 +1,6 @@
+
+
+#todoInput[type=text]:hover {
+    background-color: red;
+    transition: 2s;
+}
